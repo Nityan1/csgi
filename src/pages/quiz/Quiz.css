@@ -1,0 +1,30 @@
+
+.heading {
+    color: #EE786C;
+    font-weight: 700;
+    font-size: 30px;
+    margin-bottom: 28px;
+}
+
+.addQuizContainer {
+    display: flex;
+    font-weight: 500;
+    font-size: 28px;
+    align-items: center;
+}
+
+.addQuizIcon {
+    margin-right: 20px;
+}
+
+.boxContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 100px;
+}
+
+.iconDel {
+    width: 68px;
+    height: 68px;
+}

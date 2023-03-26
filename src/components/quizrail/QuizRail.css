@@ -1,0 +1,25 @@
+.quizRailContainer {
+    display: flex;
+    background-color: #fff;
+    box-shadow: 0px 20px 70px rgba(86, 89, 146, 0.1);
+    border-radius: 10px;
+    padding: 0 26px;
+    flex-wrap: wrap;
+    margin: 49px 0 83px 0;
+}
+
+.quizCard{
+    margin: 24px 44px 24px 0;
+    padding: 12px 0;
+    border-radius: 10px;
+    border: 1px solid #0F123F;
+    color: #0F123F;
+    background-color: #fff;
+    width: 160px;
+    text-align: center;
+}
+
+.cardActive {
+    color: #fff !important;
+    background-color: #0F123F !important;
+}

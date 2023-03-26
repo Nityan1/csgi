@@ -1,0 +1,12 @@
+.rootContainer {
+  display: flex;
+  background-color: #f8f8ff;
+  width: 100%;
+}
+
+.pageContainer {
+  padding: 60px;
+  flex: 1;
+  height: 100vh;
+  overflow-y: scroll;
+}

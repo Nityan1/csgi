@@ -1,0 +1,28 @@
+.container {
+    background: #FFFFFF;
+    box-shadow: 0px 20px 70px rgba(86, 89, 146, 0.1);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 42px;
+}
+
+.dataContainer {
+    padding: 30px 30px 0 30px;
+    font-size: 20px;
+}
+
+.actionsContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.actionIcon {
+    width: 47px;
+    height: 47px;
+    margin-left: 30px;
+}
+
+
+ol > li::marker {
+    font-weight: bold;
+  }
