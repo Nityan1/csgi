@@ -17,6 +17,7 @@
     background-color: #fff;
     width: 160px;
     text-align: center;
+    cursor: pointer;
 }
 
 .cardActive {
