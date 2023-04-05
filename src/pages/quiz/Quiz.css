@@ -6,25 +6,43 @@
     margin-bottom: 28px;
 }
 
+.mainDiv{
+    width: 100%;
+
+}
+
 .addQuizContainer {
     display: flex;
     font-weight: 500;
     font-size: 28px;
     align-items: center;
+    flex-direction: row;
+    width: 180px;
+    /* background-color: red; */
+    justify-content: space-between;
+}
+
+.addText{
+    font-size: 26;
+    font-weight: 600;
 }
 
 .addQuizIcon {
-    margin-right: 20px;
+    /* margin-right: 20px; */
+    width: 53px;
+    height: 53px;
+    object-fit: contain;
 }
 
 .boxContainer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 100px;
+    margin-bottom: 30px;
 }
 
 .iconDel {
     width: 68px;
     height: 68px;
+    cursor: pointer;
 }
