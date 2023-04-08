@@ -1,0 +1,22 @@
+
+.heading {
+    color: #EE786C;
+    font-weight: 700;
+    font-size: 30px;
+    margin-bottom: 28px;
+}
+
+.mainDiv{
+    width: 100%;
+
+}
+
+.btnContainer{
+    width: 50%;
+    display :flex;
+    justify-items: space-between ;
+    align-items: center;
+}
+
+
+
