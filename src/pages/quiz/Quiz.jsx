@@ -9,23 +9,23 @@ function Quiz() {
     const quizList = [
         {
             id: 1,
-            company_name: 'ABC'
+            company_name: 'quiz1'
         },
         {
             id: 2,
-            company_name: 'DEF'
+            company_name: 'quiz2'
         },
         {
             id: 3,
-            company_name: 'GHI'
+            company_name: 'quiz3'
         },
         {
             id: 4,
-            company_name: 'JKLMNOPQRS'
+            company_name: 'quiz4'
         },
         {
             id: 5,
-            company_name: 'ABCDEFGJ SJSNS'
+            company_name: 'quiz5'
         },
     ]
     return (

@@ -13,6 +13,7 @@ function Sidebar() {
                 <SidebarCard iconPath="/img/edit.png" label="Quiz" active route="Quiz" />
                 <SidebarCard iconPath="/img/profile.png" label="Profile" route="Profile" />
                 <SidebarCard iconPath="/img/analysis.png" label="Analysis" route="Analysis" />
+                <SidebarCard iconPath="/img/dashboard.png" label="Setting"  route="Setting" />
             </div>
 
         </div>
