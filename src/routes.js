@@ -1,5 +1,5 @@
 import QuizPage from "./pages/quiz/Quiz"
-import DashboardPage from "./pages/Dashboard"
+// import DashboardPage from "./pages/Dashboard"
 import SettingPage from "./pages/setting/Setting"
 import DashboardPage from "./pages/Dashboard/Dashboard"
 import LoginPage from "./pages/Login/login"
@@ -12,7 +12,7 @@ export default function getRoutes() {
         <Routes>
             <Route path="/" element={<DashboardPage />} />
             {/* <Route path="/login" element={<LoginPage />} /> */}
-            <Route path="/dashboard" element={<DashboardPage />} />
+            {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
             <Route path="/quiz" element={<QuizPage />} />
             <Route path="/Setting" element={< SettingPage />} />
             <Route path="/profile" element={<ProfilePage />} />
