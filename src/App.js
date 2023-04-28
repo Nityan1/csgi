@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import Sidebar from "./components/sidebar/Sidebar"
 import getRoutes from './routes';
@@ -6,6 +6,7 @@ import getRoutes from './routes';
 function App() {
   return (
     <div className="rootContainer">
+      
       <Sidebar />
       <div className="pageContainer">
         {getRoutes()}

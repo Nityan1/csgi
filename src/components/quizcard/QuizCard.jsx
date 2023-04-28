@@ -15,7 +15,7 @@ function QuizCard() {
               </ol>
             </div>
             <div className="actionsContainer">
-                <img src="/img/group-134.png" alt="edit" className="actionIcon" />
+                <img src="/img/edit-question.png" alt="edit" className="actionIcon" />
                 <img src="/img/delete-question.png" alt="delete" className="actionIcon" />
             </div>
         </div>

@@ -1,48 +1,281 @@
-
 .heading {
-    color: #EE786C;
-    font-weight: 700;
-    font-size: 30px;
-    margin-bottom: 28px;
+  color: #ee786c;
+  font-weight: 700;
+  font-size: 30px;
+  margin-bottom: 28px;
 }
 
-.mainDiv{
-    width: 100%;
-
+.mainDiv {
+  width: 100%;
 }
 
 .addQuizContainer {
-    display: flex;
-    font-weight: 500;
-    font-size: 28px;
-    align-items: center;
-    flex-direction: row;
-    width: 180px;
-    /* background-color: red; */
-    justify-content: space-between;
+  display: flex;
+  font-weight: 500;
+  font-size: 28px;
+  align-items: center;
+  flex-direction: row;
+  width: 180px;
+  /* background-color: red; */
+  justify-content: space-between;
 }
 
-.addText{
-    font-size: 26;
-    font-weight: 600;
+.addText {
+  font-size: 26;
+  font-weight: 600;
 }
 
 .addQuizIcon {
-    /* margin-right: 20px; */
-    width: 53px;
-    height: 53px;
-    object-fit: contain;
+  /* margin-right: 20px; */
+  width: 53px;
+  height: 53px;
+  object-fit: contain;
 }
 
 .boxContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .iconDel {
-    width: 68px;
-    height: 68px;
-    cursor: pointer;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.addquestionContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.addQues {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+}
+
+.backdrop {
+  position: fixed;
+  z-index: 1040;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #000;
+  opacity: 0.5;
+}
+
+.modal {
+  position: fixed;
+  width: 50%;
+  z-index: 1040;
+  top: 30%;
+  left: 30%;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.queModal {
+  position: fixed;
+  width: 50%;
+  z-index: 1040;
+  top: 20%;
+  left: 30%;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.modalContainer {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.addQuizText {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.quizDelete {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.modalMain {
+  display: flex;
+}
+
+.formInt {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.addQuesInt {
+  padding: 0px 20px 0px 20px;
+  /* background-color: red; */
+}
+
+.questionInput {
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  border-width: 0px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  /* width: 300px; */
+  height: 90px;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.inputHeading {
+  font-size: 20px;
+}
+
+.inputContianer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+.addquesContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputBox {
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  border-width: 0px;
+  margin-top: 10px;
+  width: 300px;
+  height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.AddquizBTN {
+  margin: 20px;
+  padding: 8px;
+  border-radius: 5px;
+  color: #0f123f !important;
+  background-color: white;
+  border-style: solid;
+  border-color: #0f123f;
+  cursor: pointer;
+}
+
+.deleteQuizBtn {
+  margin: 30px 0px 0px 0px;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: white;
+  border-style: solid;
+  border-color: #ff0000;
+  cursor: pointer;
+}
+
+.container {
+  background: #ffffff;
+  box-shadow: 0px 20px 70px rgba(86, 89, 146, 0.1);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 42px;
+}
+
+.dataContainer {
+  padding: 30px 30px 0 30px;
+  font-size: 20px;
+}
+
+.actionsContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.actionIcon {
+  width: 47px;
+  height: 47px;
+  margin-left: 30px;
+  cursor: pointer;
+}
+
+ol > li::marker {
+  font-weight: bold;
+}
+
+.quizRailContainer {
+  display: flex;
+  background-color: #fff;
+  box-shadow: 0px 20px 70px rgba(86, 89, 146, 0.1);
+  border-radius: 10px;
+  padding: 0 26px;
+  flex-wrap: wrap;
+  margin: 49px 0 83px 0;
+}
+
+.quizCard {
+  margin: 24px 44px 24px 0;
+  padding: 12px 0;
+  border-radius: 10px;
+  border: 1px solid #0f123f;
+  color: #0f123f;
+  background-color: #fff;
+  width: 160px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.cardActive {
+  color: #fff !important;
+  background-color: #0f123f !important;
+}
+
+.optionContainer {
+  /* width: 100%; */
+  /* background-color: red; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0px 10px 0px;
+}
+
+.option {
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  border-width: 0px;
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.normalAnswer {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: #d9d9d9;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.SelectedAnswer {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: #00ff40;
+  margin: 5px;
+  cursor: pointer;
 }
