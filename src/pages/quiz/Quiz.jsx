@@ -122,8 +122,6 @@ function Quiz() {
         )
     }
 
-
-
     return (
         <div className="mainDiv">
             <h1 className="heading">QUIZ</h1>

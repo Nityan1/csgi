@@ -3,6 +3,8 @@ import DashboardPage from "./pages/Dashboard/Dashboard"
 import LoginPage from "./pages/Login/login"
 import AnalysisPage from "./pages/Analysis/analysis"
 import ProfilePage from "./pages/Profile/profile"
+import DashboardPage from "./pages/Dashboard"
+import SettingPage from "./pages/setting/Setting"
 import { Routes, Route } from "react-router-dom"
 
 export default function getRoutes() {
@@ -14,6 +16,7 @@ export default function getRoutes() {
             <Route path="/quiz" element={<QuizPage />}/>
             <Route path="/profile" element={<ProfilePage/>} />
             <Route path="/analysis" element={<AnalysisPage/>}/>
+            <Route path="/Setting" element={< SettingPage/>}/>
         </Routes>
     )
 }

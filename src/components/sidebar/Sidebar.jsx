@@ -14,6 +14,17 @@ function Sidebar() {
                 <div className="titleText">
                     CSGI DISCORSO
                 </div>
+    // const navigate = useNavigate();
+    return (
+        <div className="sidebar">
+            <SidebarTitle />
+            <div className="sidebarContainer">
+                <SidebarCard iconPath="/img/dashboard.png" label="Dashboard"  route="Dashboard" />
+                <SidebarCard iconPath="/img/edit.png" label="Quiz" active route="Quiz" />
+                <SidebarCard iconPath="/img/profile.png" label="Profile" route="Profile" />
+                <SidebarCard iconPath="/img/analysis.png" label="Analysis" route="Analysis" />
+                <SidebarCard iconPath="/img/dashboard.png" label="Setting"  route="Setting" />
+
             </div>
         )
     }
