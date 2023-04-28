@@ -1,10 +1,35 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import "./Sidebar.css"
 
 import React from "react"
 
 function Sidebar() {
-    // const navigate = useNavigate();
+
+    const location = useLocation();
+
+    function SidebarTitle() {
+        return (
+            <div className="sidebarTitle">
+                <img src="/img/logo.png" alt="sidebarlogo" className="titleImg" />
+                <div className="titleText">
+                    CSGI DISCORSO
+                </div>
+            </div>
+        )
+    }
+
+    function SidebarCard({ iconPath, label, active, route }) {
+        const navigate = useNavigate();
+
+        return (
+            <div onClick={() => { navigate(route) }} className={`sidebarTab ${active==='hello' ? 'active' : null}`}>
+                <img src={iconPath} alt={label} className="sidebarImg" />
+                <div>{label}</div>
+            </div>
+        )
+    }
+
+
     return (
         <div className="sidebar">
             <SidebarTitle />
@@ -20,26 +45,5 @@ function Sidebar() {
     )
 }
 
-function SidebarTitle() {
-    return (
-        <div className="sidebarTitle">
-            <img src="/img/logo.png" alt="sidebarlogo" className="titleImg" />
-            <div className="titleText">
-                CSGI DISCORSO
-            </div>
-        </div>
-    )
-}
-
-function SidebarCard({ iconPath, label, active, route }) {
-    const navigate = useNavigate();
-
-    return (
-        <div onClick={() => { navigate(route) }} className={`sidebarTab ${active && 'active'}`}>
-            <img src={iconPath} alt={label} className="sidebarImg" />
-            <div>{label}</div>
-        </div>
-    )
-}
 
 export default Sidebar
