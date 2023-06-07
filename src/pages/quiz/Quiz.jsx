@@ -9,6 +9,28 @@ import { DatabaseService, AddQuizDatabase, getAllquestions, deleteQuizDatabase }
 import { green } from "@mui/material/colors";
 
 function Quiz() {
+    // const quizList = [
+    //     {
+    //         id: 1,
+    //         company_name: 'quiz1'
+    //     },
+    //     {
+    //         id: 2,
+    //         company_name: 'quiz2'
+    //     },
+    //     {
+    //         id: 3,
+    //         company_name: 'quiz3'
+    //     },
+    //     {
+    //         id: 4,
+    //         company_name: 'quiz4'
+    //     },
+    //     {
+    //         id: 5,
+    //         company_name: 'quiz5'
+    //     },
+    // ]
     const [addquizModal, setAddQuizModal] = useState(false)
     const renderBackdrop = (props) => <div className="backdrop" {...props} />;
     const [quizName, setQuizName] = useState('')
