@@ -11,26 +11,98 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
+import { DatabaseService, addNoticeDatabaseService, getAllNotices } from "../../Service/DatabaseService";
+import { useEffect } from "react";
 
 function Dashboard() {
 
     const [expanded, setExpanded] = useState(false);
     const [noticeDate, setNoticeDate] = useState(new Date());
     const [openCalender, setOpenCalender] = useState(false);
+    const [noticeBody, setNoticeBody] = useState('');
+    const [noticeHeading, setNoticeHeading] = useState('');
+    const [Notices, setNotices] = useState([]);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
 
+    useEffect(() => {
+        return () => { allNotices(); }
+    }, [])
 
-    const submitDate = () => {
-        console.log(noticeDate);
+    const allNotices = async () => {
+        let response = await getAllNotices();
+        if (response.status === 200) {
+            // console.log('response', response);
+            setNotices(response.data.result)
+        }
+        // console.log('response', response);
+    }
+
+    const submitNotice = async () => {
+
+        if (noticeBody !== '' || noticeHeading !== '') {
+            let data = {
+                "heading": noticeHeading,
+                "body": noticeBody,
+                "date": moment(noticeDate).format('DD/MM/YYYY')
+            }
+            let response = await addNoticeDatabaseService(data);
+            if (response.status === 200) {
+                console.log('response', response);
+                setNoticeBody('');
+                setNoticeHeading('');
+                allNotices();
+            } else {
+                console.log('error', response);
+                alert('Something went wrong')
+            }
+
+        } else {
+            alert('Please fill all the fields')
+        }
         setExpanded(false)
     }
 
     const addEvent = () => {
         console.log('event added');
 
+    }
+
+    const messageChange = event => {
+        console.log(event.target.value);
+        setNoticeBody(event.target.value);
+
+    }
+
+    const headingChange = event => {
+        console.log(event.target.value);
+        setNoticeHeading(event.target.value);
+    }
+
+
+    const Notice = () => {
+        console.log('Notices', Notices.map((item) => { return item.notice_heading }));
+        let list = Notices.map((item) => {
+            if (item.status === 'ACTIVE') {
+                return (
+                    <div className="notice">
+                        <div className="noticeHeader">
+                            <h3>{item.notice_heading}</h3>
+                            <h5>{item.notice_date}</h5>
+                        </div>
+                        <p className="noticeText">{item.notice_body}</p>
+                    </div>
+                )
+            }
+        })
+
+        return (
+            <>
+                {list}
+            </>
+        )
     }
 
 
@@ -41,17 +113,10 @@ function Dashboard() {
                 <div className="mockPhone">
                     <div className="header">
                         <img src="/img/logo.png" alt="logo" className="headerLogo" />
+                        <img src="/img/delete-quiz.png" alt="delete-quiz" className="deleteQuiz" />
                     </div>
 
-                    <div className="notice">
-
-                        <div className="noticeHeader">
-                            <h3>Notice</h3>
-                            <h5>25/04/2023</h5>
-
-                        </div>
-                        <p className="noticeText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rutrum lorem sit amet turpis mollis sollicitudin. Integer leo eros, faucibus eu velit eu, sagittis ullamcorper elit. Integer eget pretium felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur elementum neque ex, in bibendum magna consectetur ut. Aenean ac ex a turpis vehicula suscipit. Sed sed nulla eget augue tempor sodales. Morbi vulputate posuere metus, vitae sollicitudin risus pellentesque ac. Pellentesque at dignissim nisi, at eleifend urna. Aliquam eget arcu ex. </p>
-                    </div>
+                    <Notice />
 
                     <div className="notice">
                         <img src="/img/dash.jpg" alt="pic" className="dashPic" />
@@ -75,12 +140,20 @@ function Dashboard() {
                         </AccordionSummary>
                         <AccordionDetails>
 
+                            <TextareaAutosize
+                                className="noticeArea"
+                                minRows={3}
+                                placeholder="Notice Heading"
+                                aria-label="minimum height"
+                                onChange={headingChange}
+                            />
 
                             <TextareaAutosize
                                 className="noticeArea"
                                 minRows={3}
-                                placeholder="Minimum 3 rows"
+                                placeholder="Notice Body"
                                 aria-label="minimum height"
+                                onChange={messageChange}
                             />
 
 
@@ -100,7 +173,7 @@ function Dashboard() {
                                 <p className="dateInput"> {moment(noticeDate).format('DD/MM/YYYY')} </p>
 
 
-                                <img src="/img/submit-icon.png" alt="submit-icon" className="submitIcon" onClick={() => { submitDate() }} />
+                                <img src="/img/submit-icon.png" alt="submit-icon" className="submitIcon" onClick={() => { submitNotice() }} />
 
 
                             </div>
@@ -133,7 +206,7 @@ function Dashboard() {
                                     aria-label="minimum height"
                                 />
 
-                                <img src="/img/submit-icon.png" alt="submit-icon" className="submitIconEvent" onClick={() => { submitDate() }} />
+                                <img src="/img/submit-icon.png" alt="submit-icon" className="submitIconEvent" onClick={() => { }} />
                             </form>
                         </AccordionDetails>
                     </Accordion>

@@ -34,8 +34,10 @@
   width: 100%;
   margin: 10px 0px 10px 0px;
   display: flex;
+  flex-direction: row;
   align-items: center;
-  padding: 0px 10px 0px 10px;
+  justify-content: space-between;
+  padding: 0px 10px 0px 00px;
 }
 
 .headerLogo {
@@ -52,6 +54,7 @@
   width: 40px;
   height: 40px;
   align-self: flex-end;
+  cursor: pointer;
 }
 
 .dateArea {
@@ -79,6 +82,7 @@
   height: 40px;
   float: right;
   margin: 10px;
+  cursor: pointer;
 }
 
 .leaderBoard{
@@ -137,4 +141,10 @@ h3{
 .dashPic{
   height: auto;
   width: 100%;
+}
+
+.deleteQuiz{
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }

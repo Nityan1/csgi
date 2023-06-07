@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react"
 // import QuizRail from "../../components/quizrail/QuizRail"
 import "./Quiz.css"
 import { Modal } from "react-overlays"
+import { DatabaseService, AddQuizDatabase, getAllquestions, deleteQuizDatabase } from "../../Service/DatabaseService";
+import { green } from "@mui/material/colors";
 
 function Quiz() {
     const [addquizModal, setAddQuizModal] = useState(false)
@@ -20,105 +22,176 @@ function Quiz() {
     const [option4, setOption4] = useState('')
     const [selectedOption, setSelectedOption] = useState('');
     const [quizList, setQuizList] = useState([]);
-    const [selectedQuiz, setSelectedQuiz] = useState(quizList[0]);
+    const [selectedQuiz, setSelectedQuiz] = useState({});
     const [editquestion, setEditQuestion] = useState(false);
-    const [deletequestion, setDeleteQuestion] = useState(false)
+    const [deletequestionModal, setDeleteQuestionModal] = useState(false);
+    const [ deletingQuestion, setDeletingQuestion] = useState({});
+    const [questions, setQuestions] = useState([]);
 
 
+    const getQuestions = async (id) => {
+        let response = await getAllquestions(id);
+        // console.log('respose aya reeeeeee', response)
+        setQuestions(response.result);
+    }
 
+
+    useEffect(() => {
+        getQuiz();
+    }, [])
+
+    const getQuiz = async () => {
+        let response = await DatabaseService();
+        setQuizList(response.result)
+        setSelectedQuiz(response.result[0])
+        // console.log('/kokokokaoka',response.result[0].id)
+        getQuestions(response.result[0].id)
+    }
 
     useEffect(() => {
         // console.log('Selected QUiz is /', selectedQuiz)
     }, [selectedQuiz]);
 
-    useEffect(() => {
-        fetch(`http://192.168.19.155:8000/v1/quiz`)
-            .then((response) => response.json())
-            .then((actualData) => { setQuizList(actualData.result) });
-    }, [])
-
-
-    const addQuiz = (event) => {
+    const addQuiz = async (event) => {
         event.preventDefault();
 
         console.log(quizName, quizDescription);
         const newData = {
             company_name: quizName,
-            description: quizDescription
+            details: quizDescription,
+            start_time: "2023-02-07 13:13:00",
+            end_time: "2023-02-07 22:00:00"
         };
-        quizList.push(newData);
+
+        let response = await AddQuizDatabase(newData);
+        console.log('add quiz response', response);
         setQuizName('')
         setQuizDescription('');
         setAddQuizModal(false)
         console.log(quizList)
+        if (response.code === 200) {
+            console.log('response code 200')
+            getQuiz();
+        }
+
     }
 
 
-    function deleteQuiz() {
+    const deleteQuiz = async () => {
+        console.log('selected quiz', selectedQuiz)
+        let response = await deleteQuizDatabase(selectedQuiz.id);
+        console.log('delete quiz response', response);
+         getQuiz();
+       
 
         setDeleteQuizModal(false);
 
 
     }
 
-    const addQuestion = (event) => {
+    const addQuestion = async (event) => {
         event.preventDefault();
+        let data = {
+            "question": question,
+            "answers": [
+                {
+                    answer: option1,
+                    is_correct: selectedOption === option1 ? 'true' : 'false'
+                },
+                {
+                    answer: option2,    
+                    is_correct: selectedOption === option2 ? 'true' : 'false' 
+                },
+                {
+                    answer: option3,
+                    is_correct: selectedOption === option3 ? 'true' : 'false'
+                },
+                {
+                    answer: option4,
+                    is_correct: selectedOption === option4 ? 'true' : 'false'
+                },
+                
+            ],
+            quiz_id: selectedQuiz.id
+        }
+
+        let response = await AddQuizDatabase(data);
+        console.log('add question response', response);
         console.log('question', question)
         console.log('options', option1, option2, option3, option4)
-        console.log('isko delte krne ka re babu', selectedQuiz)
+        console.log('isko delte krne ka re babu', selectedOption)
         setAddquesModal(false)
 
     }
 
-    function QuizCard() {
-        return (
-            <div className="container">
-                <div className="dataContainer">
-                    <b>Ques 1. </b>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tortor quam, pulvinar vel massa convallis, scelerisque auctor lacus. Nulla sed semper nibh, quis feugiat ante. Fusce non est in tortor malesuada lobortis. Vestibulum eget sapien ex.
-                    <ol type="A">
-                        <li>Lorem ipsum dolor sit amet, </li>
-                        <li>Lorem ipsum dolor sit amet, </li>
-                        <li>Lorem ipsum dolor sit amet, </li>
-                        <li>Lorem ipsum dolor sit amet, </li>
-                    </ol>
-                </div>
-                <div className="actionsContainer">
-                    <img src="/img/edit-question.png" alt="edit" className="actionIcon" onClick={() => { setEditQuestion(true) }} />
-                    <img src="/img/delete-question.png" alt="delete" className="actionIcon" onClick={() => { setDeleteQuestion(true) }} />
-                </div>
-            </div>
-        )
+    const funcDeletingQuestion = () => {
+        console.log('data item', deletingQuestion);
+        setDeleteQuestionModal(false)
+        
+
+
+
     }
+
+    // let quizCardItems = 
+
+    function QuizCard() {
+
+        // console.log('list questions ki',questions.map((data)=>{ return (console.log(data))}))
+
+        let displayData = questions?.map((data) => {
+            return (
+                <div className="container" >
+                    <div className="dataContainer">
+                        <b>Ques 1. </b>
+                        <b> {data.question.question} </b>
+                        <ol type="A">
+                            {
+                                data?.answer?.map((items) => { return (<li key={items.id} className={items.is_correct === 'true' ? "correct_answer" : null} >{items.answer}</li>) })
+                            }
+                        </ol>
+                    </div>
+                    <div className="actionsContainer">
+                        <img src="/img/edit-question.png" alt="edit" className="actionIcon" onClick={() => { setEditQuestion(true) }} />
+                        <img src="/img/delete-question.png" alt="delete" className="actionIcon" onClick={() => {  setDeleteQuestionModal(true); setDeletingQuestion(data) }} />
+                    </div>
+                </div>
+
+
+            )
+        });
+
+
+        return (displayData);
+    }
+
+
 
 
     function QuizRail() {
 
-        // console.log('rgsr', quizList)
         function QuizRailCard({ labelData, active }) {
+
 
             const getQuestion = () => {
                 setSelectedQuiz(labelData);
-                fetch(`http://192.168.19.155:8000/v1/question/` + labelData.id)
-                    .then((response) => response.json())
-                    .then((actualData) => { console.log(actualData) });
-
+                getQuestions(labelData.id);
             }
 
             return (
-                <div onClick={() => { getQuestion() }} className={`quizCard ${active && 'cardActive'}`}>
+                <li onClick={() => { getQuestion() }} className={`quizCard ${active && 'cardActive'}`}>
                     {labelData.company_name}
-                </div>
+                </li>
             )
         }
 
 
         return (
-            <div className="quizRailContainer">
+            <ul className="quizRailContainer">
                 {
-                    quizList.map(listItem => { return (<QuizRailCard labelData={listItem} active={selectedQuiz.company_name === listItem.company_name ? true : false} />) })
+                    quizList?.map((listItem) => { return (<QuizRailCard labelData={listItem} active={selectedQuiz.company_name === listItem.company_name ? true : false} />) })
                 }
-            </div>
+            </ul>
         )
     }
 
@@ -135,7 +208,7 @@ function Quiz() {
             <QuizRail />
 
             <div className="boxContainer">
-                {/* <h1>{selectedQuiz.company_name}</h1> */}
+                <h1>{selectedQuiz.company_name}</h1>
                 <img src="/img/delete-quiz.png" alt="delete" className="iconDel" onClick={() => { setDeleteQuizModal(true) }} />
             </div>
 
@@ -147,9 +220,7 @@ function Quiz() {
 
 
             <QuizCard />
-            <QuizCard />
-            <QuizCard />
-            <QuizCard />
+
 
             {/* Add Quiz Modal */}
             <Modal
@@ -166,20 +237,16 @@ function Quiz() {
                             <img src="/img/cancel-icon.png" alt="delte" className="quizDelete" />
                         </div>
                     </div>
-                    <div className="formContainer">
-                        <div className="formInt" >
-                            <form className="inputContianer" onSubmit={addQuiz}>
+                    <form className="inputContianer" onSubmit={addQuiz}>
 
-                                <label className="inputHeading">Name</label>
-                                <input className="inputBox" name="name" placeholder="Quiz Name" value={quizName} onChange={(event) => { setQuizName(event.target.value) }} />
+                        <label className="inputHeading">Name</label>
+                        <input className="inputBox" name="name" placeholder="Quiz Name" value={quizName} onChange={(event) => { setQuizName(event.target.value) }} />
 
-                                <label className="inputHeading">Description</label>
-                                <input className="inputBox" name="desciption" placeholder="Description" value={quizDescription} onChange={(event) => { setQuizDescription(event.target.value) }} />
+                        <label className="inputHeading">Description</label>
+                        <input className="inputBox" name="desciption" placeholder="Description" value={quizDescription} onChange={(event) => { setQuizDescription(event.target.value) }} />
 
-                                <button className="AddquizBTN" type="submit">Submit </button>
-                            </form>
-                        </div>
-                    </div>
+                        <button className="AddquizBTN" type="submit">Submit </button>
+                    </form>
                 </>
             </Modal>
             {/* Add Quiz Modal */}
@@ -202,12 +269,12 @@ function Quiz() {
                     </div>
                     <div className="formContainer">
                         <div className="formInt" >
-                            <form className="inputContianer" onSubmit={deleteQuiz}>
+                            <div className="inputContianer" >
 
-                                {/* <label className="inputHeading">You want to delete {selectedQuiz.company_name} </label> */}
+                                <label className="inputHeading">You want to delete "{selectedQuiz.company_name}" </label>
 
-                                <button className="deleteQuizBtn" type="submit">Delete </button>
-                            </form>
+                                <button className="deleteQuizBtn" onClick={()=>{deleteQuiz()}}>Delete </button>
+                            </div>
                         </div>
                     </div>
                 </>
@@ -273,8 +340,8 @@ function Quiz() {
 
             <Modal
                 className="queModal"
-                show={deletequestion}
-                onHide={() => { setDeleteQuestion(false) }}
+                show={deletequestionModal}
+                onHide={() => { setDeleteQuestionModal(false) }}
                 renderBackdrop={renderBackdrop}
             >
                 <>
@@ -282,18 +349,18 @@ function Quiz() {
                     <div className="modalContainer">
                         <div></div>
                         <div className="addQuizText">Delete Question</div>
-                        <div onClick={() => { setDeleteQuestion(false) }} >
+                        <div onClick={() => { setDeleteQuestionModal(false) }} >
                             <img src="/img/cancel-icon.png" alt="delte" className="quizDelete" />
                         </div>
                     </div>
                     <div className="formContainer">
                         <div className="formInt" >
-                            <form className="inputContianer" onSubmit={deleteQuiz}>
+                            <div className="inputContianer" >
 
-                                {/* <label className="inputHeading">You want to delete {selectedQuiz.company_name} </label> */}
+                                <label className="inputHeading">You want to delete {} </label>
 
-                                <button className="deleteQuizBtn" type="submit">Delete </button>
-                            </form>
+                                <button className="deleteQuizBtn" onClick={()=>{funcDeletingQuestion()}}>Delete </button>
+                            </div>
                         </div>
                     </div>
                 </>

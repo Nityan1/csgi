@@ -4,9 +4,3 @@
   width: 100%;
 }
 
-.pageContainer {
-  padding: 20px;
-  flex: 1;
-  height: 100vh;
-  overflow-y: scroll;
-}
