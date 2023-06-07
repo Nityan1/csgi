@@ -9,7 +9,10 @@ function Sidebar() {
                 <img src="/img/logo.png" alt="sidebarlogo" className="titleImg" />
                 <div className="titleText">
                     CSGI DISCORSO
-                </div>  </div>
+
+                </div>
+            </div>
+
         )
     }
     function SidebarCard({ iconPath, label, active, route }) {
