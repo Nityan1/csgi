@@ -1,7 +1,7 @@
 export const APIkeys = {
     url:'http://3.109.144.10:8000/v1',
     getAllQuiz : '/quiz',
-    addQuiz : '/question/',
+    addQuiz : '/quiz/',
     deleteQuiz : '/quiz/',
     getAllquestions : '/question/',
     addNotice:'/notice',

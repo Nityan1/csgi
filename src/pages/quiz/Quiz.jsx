@@ -25,14 +25,14 @@ function Quiz() {
     const [selectedQuiz, setSelectedQuiz] = useState({});
     const [editquestion, setEditQuestion] = useState(false);
     const [deletequestionModal, setDeleteQuestionModal] = useState(false);
-    const [ deletingQuestion, setDeletingQuestion] = useState({});
+    const [deletingQuestion, setDeletingQuestion] = useState({});
     const [questions, setQuestions] = useState([]);
 
 
     const getQuestions = async (id) => {
         let response = await getAllquestions(id);
-        // console.log('respose aya reeeeeee', response)
-        setQuestions(response.result);
+        console.log('respose aya reeeeeee', response.data)
+        setQuestions(response.data.result);
     }
 
 
@@ -42,10 +42,11 @@ function Quiz() {
 
     const getQuiz = async () => {
         let response = await DatabaseService();
-        setQuizList(response.result)
-        setSelectedQuiz(response.result[0])
+        console.log('response', response)
+        setQuizList(response.data.result)
+        setSelectedQuiz(response.data.result[0])
         // console.log('/kokokokaoka',response.result[0].id)
-        getQuestions(response.result[0].id)
+        getQuestions(response.data.result[0].id)
     }
 
     useEffect(() => {
@@ -69,7 +70,7 @@ function Quiz() {
         setQuizDescription('');
         setAddQuizModal(false)
         console.log(quizList)
-        if (response.code === 200) {
+        if (response.status === 200) {
             console.log('response code 200')
             getQuiz();
         }
@@ -81,8 +82,8 @@ function Quiz() {
         console.log('selected quiz', selectedQuiz)
         let response = await deleteQuizDatabase(selectedQuiz.id);
         console.log('delete quiz response', response);
-         getQuiz();
-       
+        getQuiz();
+
 
         setDeleteQuizModal(false);
 
@@ -99,8 +100,8 @@ function Quiz() {
                     is_correct: selectedOption === option1 ? 'true' : 'false'
                 },
                 {
-                    answer: option2,    
-                    is_correct: selectedOption === option2 ? 'true' : 'false' 
+                    answer: option2,
+                    is_correct: selectedOption === option2 ? 'true' : 'false'
                 },
                 {
                     answer: option3,
@@ -110,7 +111,7 @@ function Quiz() {
                     answer: option4,
                     is_correct: selectedOption === option4 ? 'true' : 'false'
                 },
-                
+
             ],
             quiz_id: selectedQuiz.id
         }
@@ -127,7 +128,7 @@ function Quiz() {
     const funcDeletingQuestion = () => {
         console.log('data item', deletingQuestion);
         setDeleteQuestionModal(false)
-        
+
 
 
 
@@ -153,7 +154,7 @@ function Quiz() {
                     </div>
                     <div className="actionsContainer">
                         <img src="/img/edit-question.png" alt="edit" className="actionIcon" onClick={() => { setEditQuestion(true) }} />
-                        <img src="/img/delete-question.png" alt="delete" className="actionIcon" onClick={() => {  setDeleteQuestionModal(true); setDeletingQuestion(data) }} />
+                        <img src="/img/delete-question.png" alt="delete" className="actionIcon" onClick={() => { setDeleteQuestionModal(true); setDeletingQuestion(data) }} />
                     </div>
                 </div>
 
@@ -172,14 +173,14 @@ function Quiz() {
 
         function QuizRailCard({ labelData, active }) {
 
-
+            // console.log('label data', labelData)
             const getQuestion = () => {
                 setSelectedQuiz(labelData);
                 getQuestions(labelData.id);
             }
 
             return (
-                <li onClick={() => { getQuestion() }} className={`quizCard ${active && 'cardActive'}`}>
+                <li onClick={() => { getQuestion() }} className={`quizCard ${active && 'cardActive'}`} key={labelData.id}>
                     {labelData.company_name}
                 </li>
             )
@@ -194,8 +195,6 @@ function Quiz() {
             </ul>
         )
     }
-
-
 
     return (
         <div className="mainDiv">
@@ -273,7 +272,7 @@ function Quiz() {
 
                                 <label className="inputHeading">You want to delete "{selectedQuiz.company_name}" </label>
 
-                                <button className="deleteQuizBtn" onClick={()=>{deleteQuiz()}}>Delete </button>
+                                <button className="deleteQuizBtn" onClick={() => { deleteQuiz() }}>Delete </button>
                             </div>
                         </div>
                     </div>
@@ -357,9 +356,9 @@ function Quiz() {
                         <div className="formInt" >
                             <div className="inputContianer" >
 
-                                <label className="inputHeading">You want to delete {} </label>
+                                <label className="inputHeading">You want to delete { } </label>
 
-                                <button className="deleteQuizBtn" onClick={()=>{funcDeletingQuestion()}}>Delete </button>
+                                <button className="deleteQuizBtn" onClick={() => { funcDeletingQuestion() }}>Delete </button>
                             </div>
                         </div>
                     </div>

@@ -11,7 +11,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
-import { DatabaseService, addNoticeDatabaseService, getAllNotices } from "../../Service/DatabaseService";
+import { DatabaseService, addNoticeDatabaseService, deleteNotice, getAllNotices } from "../../Service/DatabaseService";
 import { useEffect } from "react";
 
 function Dashboard() {
@@ -37,7 +37,7 @@ function Dashboard() {
             // console.log('response', response);
             setNotices(response.data.result)
         }
-        // console.log('response', response);
+        console.log('response', response);
     }
 
     const submitNotice = async () => {
@@ -81,6 +81,16 @@ function Dashboard() {
         setNoticeHeading(event.target.value);
     }
 
+    const noticeDelete = async (item) => {
+        console.log('delete', item.id);
+        let response = await deleteNotice(item.id);
+        console.log('response bhr wala', response);
+        if (response.status === 200) {
+            allNotices();
+        }
+
+    }
+
 
     const Notice = () => {
         console.log('Notices', Notices.map((item) => { return item.notice_heading }));
@@ -88,6 +98,7 @@ function Dashboard() {
             if (item.status === 'ACTIVE') {
                 return (
                     <div className="notice">
+                        <img src="/img/delete-quiz.png" alt="delete-quiz" className="deleteQuiz" onClick={() => { noticeDelete(item) }} />
                         <div className="noticeHeader">
                             <h3>{item.notice_heading}</h3>
                             <h5>{item.notice_date}</h5>
@@ -113,7 +124,7 @@ function Dashboard() {
                 <div className="mockPhone">
                     <div className="header">
                         <img src="/img/logo.png" alt="logo" className="headerLogo" />
-                        <img src="/img/delete-quiz.png" alt="delete-quiz" className="deleteQuiz" />
+
                     </div>
 
                     <Notice />

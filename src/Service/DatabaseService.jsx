@@ -13,18 +13,18 @@ export async function DatabaseService() {
     // console.log('wddddddddddddddddd')
     let requestOptions = {
         method: 'GET',
-        headers: Header
+        headers:  {"Authorization" : `Bearer ${token}`},
+        url : APIkeys.url + APIkeys.getAllQuiz
     }
-
-    let url = APIkeys.url + APIkeys.getAllQuiz
+ 
 
     return new Promise((resolve, reject) => {
-        fetch(url, requestOptions)
+        axios( requestOptions)
             .then((response) => {
-                return response.json()
+                return response
             })
             .then((response) => {
-                if (response.code === 200) {
+                if (response.status === 200) {
                     resolve(response)
                 } else {
                     reject(response)
@@ -39,10 +39,10 @@ export async function DatabaseService() {
 
 export async function AddQuizDatabase(body) {
     console.log('add quiz data', body);
-    // const Header = new Headers();
+    const Header = new Headers();
     // let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibG9naW5faWQiOiJCSDM0MjkiLCJwYXNzd29yZCI6IkFCSEkyMDAwQENTSVQuSU4iLCJjcmVhdGVkX2F0IjoiMjAyMy0wMi0wNFQwNzo1NjozNS4wMDBaIiwidXBkYXRlZF9hdCI6IjIwMjMtMDItMDRUMDc6NTg6MjUuMDAwWiIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNjgyNTg5MjEyfQ.0xNINNuH9jjv3xPieT-EUlWpLIkQIw4eUh0JO7OB1lY'
     Header.append("Authorization", token)
-    console.log('headersssssss', Header)
+    // console.log('headersssssss', Header)
     let requestOptions = {
         method: 'POST',
         url:APIkeys.url + APIkeys.addQuiz,
@@ -60,7 +60,7 @@ export async function AddQuizDatabase(body) {
                 return response;
             })
             .then((response) => {
-                if (response.code === 200) {
+                if (response.status === 200) {
                     resolve(response)
                 } else {
                     reject(response)
@@ -82,20 +82,21 @@ export async function getAllquestions(body) {
     console.log('headersssssss', Header)
     let requestOptions = {
         method: 'GET',
-        headers: Header,
+        headers: {"Authorization" : `Bearer ${token}`},
+        url : APIkeys.url + APIkeys.getAllquestions + body + '/getAllQuestions' 
     }
     console.log('wwwwwwwwwwwwwwwwwwwwwwwwww',requestOptions);
-    let url = APIkeys.url + APIkeys.getAllquestions + body + '/getAllQuestions' ;
-    console.log('aaaaaaaaaaaaaaaaaaaa',url);
+    // let ;
+    // console.log('aaaaaaaaaaaaaaaaaaaa',url);
 
     return new Promise((resolve, reject) => {
-        fetch(url, requestOptions)
+        axios( requestOptions)
             .then((response) => {
                 console.log(response);
-                return response.json()
+                return response
             })
             .then((response) => {
-                if (response.code === 200) {
+                if (response.status === 200) {
                     resolve(response)
                 } else {
                     reject(response)
@@ -179,10 +180,6 @@ export async function addNoticeDatabaseService(body) {
 }
 
 export async function getAllNotices() {
-    // console.log('bodyyyyyyyyyyyyyyyyyyy', body);
-    // const Header = new Headers();
-    // let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibG9naW5faWQiOiJCSDM0MjkiLCJwYXNzd29yZCI6IkFCSEkyMDAwQENTSVQuSU4iLCJjcmVhdGVkX2F0IjoiMjAyMy0wMi0wNFQwNzo1NjozNS4wMDBaIiwidXBkYXRlZF9hdCI6IjIwMjMtMDItMDRUMDc6NTg6MjUuMDAwWiIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNjgyNTg5MjEyfQ.0xNINNuH9jjv3xPieT-EUlWpLIkQIw4eUh0JO7OB1lY'
-    // Header.append("Authorization", token)
     let requestOptions = {
         method: 'GET',
         headers: {"Authorization" : `Bearer ${token}`},
@@ -211,3 +208,39 @@ export async function getAllNotices() {
     });
 
 }
+
+export async function deleteNotice(data) {
+
+    let dataItem={
+        status:"INACTIVE"
+    }
+    let requestOptions = {
+        method: 'PUT',
+        headers: {"Authorization" : `Bearer ${token}`},
+        url :APIkeys.url + APIkeys.updateNotice+data,
+        data:dataItem
+    }
+    console.log('wwwwwwwwwwwwwwwwwwwwwwwwww',requestOptions);
+    // let 
+    // console.log('aaaaaaaaaaaaaaaaaaaa',url);
+
+    return new Promise((resolve, reject) => {
+        axios(requestOptions)
+            .then((response) => {
+                // console.log(response);
+                return response
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    resolve(response)
+                } else {
+                    reject(response)
+                }
+            }).catch(function (e) {
+                console.log("ERR", e)
+                reject(e)
+            })
+    });
+
+}
+
