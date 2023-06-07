@@ -4,10 +4,10 @@ import SettingPage from "./pages/setting/Setting"
 import DashboardPage from "./pages/Dashboard/Dashboard"
 import LoginPage from "./pages/Login/login"
 import AnalysisPage from "./pages/Analysis/analysis"
-import ProfilePage from "./pages/Profile/profile"
+import ProfilePage from "./pages/Profile/Profile"
 import { Routes, Route } from "react-router-dom"
 
-export default function getRoutes() {
+export function getRoutes() {
     return (
         <Routes>
             <Route path="/" element={<DashboardPage />} />
